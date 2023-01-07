@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\sirgan-be.props" />
+</Project>
