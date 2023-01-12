@@ -21,5 +21,14 @@ namespace sirgan_be.Controllers
             //return Ok(_context);
             return Ok(await _context.farms.ToListAsync());
         }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Farm>> Get(int id)
+        {
+            return Ok(_context.farms
+                .FromSqlRaw<Farm>("GetFarmByID {0}", id)
+                .ToList()
+                .FirstOrDefault());
+        }
     }
 }
