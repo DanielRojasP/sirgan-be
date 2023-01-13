@@ -15,7 +15,7 @@ namespace sirgan_be.Controllers
         {
             _context = context;
         }
-        ////show user
+        ////show users
         [HttpGet]
         public async Task<ActionResult<List<User>>> Get()
         {
