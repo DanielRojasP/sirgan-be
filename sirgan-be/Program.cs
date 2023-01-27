@@ -1,11 +1,25 @@
 global using sirgan_be.Data;
 using Microsoft.EntityFrameworkCore;
 
+
+var myAllowSpecificOrigin = "myAllowSpecificOrigin";
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
+
+//Enable Cors
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name : myAllowSpecificOrigin,
+        builder =>
+        {
+            builder.WithOrigins("http://localhost:4200")
+            .AllowAnyMethod()
+            .AllowAnyHeader();
+        });
+});
 
 //DB instance
 
@@ -27,7 +41,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+
+
 app.UseHttpsRedirection();
+
+app.UseCors(myAllowSpecificOrigin);
 
 app.UseAuthorization();
 
