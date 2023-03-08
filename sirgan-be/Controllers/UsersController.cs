@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
@@ -103,6 +104,16 @@ namespace sirgan_be.Controllers
         private bool UserExists(int id)
         {
             return _context.users.Any(e => e.Id == id);
+        }
+        [HttpPost("LoginUser")]
+        public IActionResult Login(Login user) {
+            var userAvailable = _context.users.Where(u => u.Email == user.Email && u.Password == user.Password).FirstOrDefault();
+            var notFound = "Failure";
+            if (userAvailable != null)
+            {
+                return Ok(userAvailable);
+            }
+            return BadRequest(notFound);
         }
     }
 }
